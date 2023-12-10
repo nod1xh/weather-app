@@ -1,19 +1,5 @@
 import { useRef, useState } from "react";
-import clearIcon from "./assets/icons/sun.svg";
-
-const currentDate = new Date();
-const options = { weekday: "long", day: "numeric", month: "long" };
-const formattedDate = currentDate.toLocaleDateString("en-US", options);
-
-export function WeatherIcon(iconCode) {
-  let iconPath;
-
-  if ((iconCode = "o1d")) {
-    iconPath = clearIcon;
-  }
-
-  return <img src={iconPath} alt={`Weather Icon`} className="w-40 h-40" />;
-}
+import Weather from "./components/Weather";
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
@@ -32,7 +18,7 @@ function App() {
       setWeatherData(data);
       console.log(data);
     } catch (error) {
-      console.error("Error trying to fetch weather data:", error); // Ispisi nesto kasnije na ekranu
+      console.error("Error trying to fetch weather data:", error);
     }
   }
 
@@ -42,9 +28,7 @@ function App() {
 
   return (
     <>
-      {/* Div koji obuhvaca sve  */}
       <div className="flex flex-col items-center font-raleway text-white bg-[url('./assets/images/bgclouds.jpg')] w-screen h-screen bg-cover tracking-wider">
-        {/* h1 & form */}
         <div className="flex flex-col justify-center text-center w-2/4 my-3 rounded-md py-3 ">
           <div className="mb-10">
             <h1 className="mb-3 text-2xl font-extrabold ">WEATHER FORECAST</h1>
@@ -68,28 +52,13 @@ function App() {
           </div>
         </div>
         {weatherData && (
-          <div className=" rounded-md bg-[#FDFDFD] bg-opacity-20 w-2/4 text-[#265e99] ">
-            <div className="ml-5 ">
-              <h1 className="mt-3 text-4xl font-sans font-semibold ">
-                {weatherData.city.name}, {weatherData.city.country}
-              </h1>
-              <h2 className="text-xl">{formattedDate}</h2>
-            </div>
-            <div className="flex m-5">
-              <div className="mt-5">
-                <WeatherIcon iconCode={weatherData.list[0].weather[0].icon} />
-              </div>
-              <div className="mt-16 ">
-                <p className="ml-2 block text-2xl">
-                  {Math.floor(weatherData.list[0].main.temp)}&deg;C
-                </p>
-                <p className="ml-2 block">
-                  {weatherData.list[0].weather[0].main}
-                </p>
-              </div>
-            </div>
-            {/* <div>Ostali podaci </div> */}
-          </div>
+          <Weather
+            city={weatherData.city.name}
+            country={weatherData.city.country}
+            iconCode={weatherData.list[0].weather[0].icon}
+            temp={Math.floor(weatherData.list[0].main.temp)}
+            main={weatherData.list[0].weather[0].main}
+          />
         )}
       </div>
     </>
