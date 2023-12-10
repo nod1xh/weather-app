@@ -1,8 +1,19 @@
 import { useRef, useState } from "react";
+import clearIcon from "./assets/icons/sun.svg";
 
 const currentDate = new Date();
-const options = { weekday: "long", day: "numeric", month: "short" };
+const options = { weekday: "long", day: "numeric", month: "long" };
 const formattedDate = currentDate.toLocaleDateString("en-US", options);
+
+export function WeatherIcon(iconCode) {
+  let iconPath;
+
+  if ((iconCode = "o1d")) {
+    iconPath = clearIcon;
+  }
+
+  return <img src={iconPath} alt={`Weather Icon`} className="w-40 h-40" />;
+}
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
@@ -32,10 +43,10 @@ function App() {
   return (
     <>
       {/* Div koji obuhvaca sve  */}
-      <div className="flex flex-col items-center font-raleway text-white bg-[url('./assets/images/newestbg.jpg')] w-screen h-screen bg-cover tracking-wider">
+      <div className="flex flex-col items-center font-raleway text-white bg-[url('./assets/images/bgclouds.jpg')] w-screen h-screen bg-cover tracking-wider">
         {/* h1 & form */}
         <div className="flex flex-col justify-center text-center w-2/4 my-3 rounded-md py-3 ">
-          <div className="mb-40">
+          <div className="mb-10">
             <h1 className="mb-3 text-2xl font-extrabold ">WEATHER FORECAST</h1>
           </div>
           <div className="opacity-60">
@@ -51,23 +62,33 @@ function App() {
                 className="bg-white bg-opacity-60 p-1 rounded-xl border-none focus:outline-none w-9/12 font-light tracking-wider text-center text-[#00183a] text-bold"
               />
               <button className=" rounded-md px-4 bg-[#dfa87f] hover:bg-[#cf725d] ">
-                Get location
+                Get Weather
               </button>
             </form>
           </div>
         </div>
         {weatherData && (
-          <div className="relative rounded-md bg-[#FDFDFD] bg-opacity-20 w-2/4 p-32 ">
-            <div className="absolute inset-x-0 top-0 h-16 text-center">
-              <h1 className="mt-3 text-4xl font-sans font-semibold">
-                {weatherData.city.name}
+          <div className=" rounded-md bg-[#FDFDFD] bg-opacity-20 w-2/4 text-[#265e99] ">
+            <div className="ml-5 ">
+              <h1 className="mt-3 text-4xl font-sans font-semibold ">
+                {weatherData.city.name}, {weatherData.city.country}
               </h1>
-              <h2>{formattedDate}</h2>
+              <h2 className="text-xl">{formattedDate}</h2>
             </div>
-            <div>
-              <p>Temp: {Math.floor(weatherData.list[0].main.temp)}</p>
-              <p>Humidity: {Math.floor(weatherData.list[0].main.humidity)}</p>
+            <div className="flex m-5">
+              <div className="mt-5">
+                <WeatherIcon iconCode={weatherData.list[0].weather[0].icon} />
+              </div>
+              <div className="mt-16 ">
+                <p className="ml-2 block text-2xl">
+                  {Math.floor(weatherData.list[0].main.temp)}&deg;C
+                </p>
+                <p className="ml-2 block">
+                  {weatherData.list[0].weather[0].main}
+                </p>
+              </div>
             </div>
+            {/* <div>Ostali podaci </div> */}
           </div>
         )}
       </div>
