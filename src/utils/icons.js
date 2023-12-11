@@ -1,5 +1,5 @@
 import clearSky from "../assets/icons/sun.svg";
-import clearNight from "../assets/icons/clear-night.svg";
+
 import cloudyDay from "../assets/icons/cloudy-day-3.svg";
 import cloudyNight from "../assets/icons/cloudy-night-2.svg";
 import showerRain from "../assets/icons/heavy-rain.svg";
@@ -10,7 +10,7 @@ import mist from "../assets/icons/mist.svg";
 
 const WeatherIcons = {
   "01d": clearSky,
-  "01n": clearNight,
+  "01n": clearSky,
   "02d": cloudyDay,
   "03d": cloudyDay,
   "04d": cloudyDay,
