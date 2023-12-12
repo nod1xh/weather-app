@@ -1,10 +1,12 @@
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import Weather from "./components/Weather";
+import Forecast from "./components/Forecast";
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [city, setCity] = useState("New York");
+  const [animate, setAnimate] = useState(false);
   const inputValue = useRef();
 
   async function getWeatherData() {
@@ -15,6 +17,7 @@ function App() {
       const response = await fetch(apiUrl);
       const data = await response.json();
       setWeatherData(data);
+      setAnimate(true);
 
       console.log(data);
     } catch (error) {
@@ -22,9 +25,9 @@ function App() {
     }
   }
 
-  function handleCityData() {
+  const handleCityData = useCallback(() => {
     setCity(inputValue.current.value);
-  }
+  }, []);
 
   function handleFetchData(e) {
     e.preventDefault();
@@ -32,14 +35,20 @@ function App() {
   }
 
   return (
-    <>
+    <div className="flex flex-col items-center">
       <Header
         data={weatherData}
         getWeather={handleFetchData}
         getCity={handleCityData}
         input={inputValue}
       />
-    </>
+      {weatherData && <Weather data={weatherData} animation={animate} />}
+      {weatherData && (
+        <div className="flex flex-row w-full ">
+          <Forecast data={weatherData} animation={animate} />
+        </div>
+      )}
+    </div>
   );
 }
 

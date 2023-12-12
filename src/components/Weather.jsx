@@ -1,10 +1,13 @@
+import "animate.css";
 import WeatherIcon from "./WeatherIcon";
 import { formattedDate } from "../utils/utility";
 import WeatherStatus from "./WeatherStatus";
 
 export default function Weather({ data }) {
+  const icon = "w-52 h-52 inline";
+
   return (
-    <div className=" rounded-md  w-2/4 text-[#00183a] ">
+    <div className="rounded-md w-2/4 text-[#00183a] animate__animated animate__fadeIn">
       <div className=" w-1/2">
         <h1 className="mt-3 text-4xl font-sans font-semibold ">
           {data.city.name}, {data.city.country}
@@ -13,7 +16,7 @@ export default function Weather({ data }) {
       </div>
       <div className="flex m-5 justify-between">
         <div>
-          <WeatherIcon icon={data.list[0].weather[0].icon} />
+          <WeatherIcon icon={data.list[0].weather[0].icon} className={icon} />
         </div>
         <WeatherStatus data={data} />
       </div>

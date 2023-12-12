@@ -19,7 +19,6 @@ export default {
           fontSize: theme("fontSize.xl"),
           display: theme("display: block"),
         },
-        p: { margin: theme("margin.2") },
       });
     }),
   ],
