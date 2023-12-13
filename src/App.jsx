@@ -2,50 +2,59 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import Weather from "./components/Weather";
 import Forecast from "./components/Forecast";
+import ShowError from "./components/ShowError";
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [city, setCity] = useState("New York");
-  const [animate, setAnimate] = useState(false);
+  const [error, setError] = useState();
   const inputValue = useRef();
 
-  async function getWeatherData() {
+  const getWeatherData = useCallback(async (e) => {
+    e.preventDefault();
     try {
       const apiKey = "f03f9c8183c747374c01f5a936e384ca";
       const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
 
       const response = await fetch(apiUrl);
       const data = await response.json();
-      setWeatherData(data);
-      setAnimate(true);
-
-      console.log(data);
+      if (data.cod == 200) {
+        setWeatherData(data);
+        setError(null);
+        console.clear();
+      }
+      if (data.cod != 200) {
+        setWeatherData(null);
+        throw new Error("Failed to find a city, please try again!");
+      }
     } catch (error) {
-      console.error("Error trying to fetch weather data:", error);
+      setError(error.message);
     }
-  }
+  });
+
+  useEffect(() => {
+    if (weatherData === null) {
+      return;
+    }
+  }, [weatherData]);
 
   const handleCityData = useCallback(() => {
     setCity(inputValue.current.value);
-  }, []);
-
-  function handleFetchData(e) {
-    e.preventDefault();
-    getWeatherData();
-  }
+  }, [weatherData]);
 
   return (
     <div className="flex flex-col items-center">
       <Header
         data={weatherData}
-        getWeather={handleFetchData}
+        getWeather={getWeatherData}
         getCity={handleCityData}
         input={inputValue}
       />
-      {weatherData && <Weather data={weatherData} animation={animate} />}
+      {error && <ShowError errorInfo={error} />}
+      {weatherData && <Weather data={weatherData} />}
       {weatherData && (
         <div className="flex flex-row w-full ">
-          <Forecast data={weatherData} animation={animate} />
+          <Forecast data={weatherData} />
         </div>
       )}
     </div>
