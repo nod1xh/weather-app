@@ -7,9 +7,14 @@ export default {
       fontFamily: {
         raleway: ["raleway", "sans-serif"],
       },
-      backgroundImage: {
-        "hero-pattern": "url('./assets/images/newestbg.jpg)",
-      },
+    },
+    screens: {
+      sms: "320px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1440px",
+      xxl: "2560px",
     },
   },
   plugins: [

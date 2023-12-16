@@ -4,11 +4,11 @@ import "animate.css";
 export default function Forecast({ data }) {
   return (
     <>
-      <div className="flex flex-col m-10 animate-fadeIn">
-        <div className=" text-2xl text-[#00183a]">
+      <div className="flex flex-col mt-10 sms:mx-24 md:items-center lg:mt-10 lg:mx-0 animate-fadeIn">
+        <div className="text-2xl text-[#00183a] sms:uppercase sms:text-xl sms:text-center lg:mb-2 xl:w-full xl:text-start xl:ml-4">
           <h1>Forecast</h1>
         </div>
-        <div className="flex flex-row">
+        <div className="flex lg:flex-row md:w-fit sms:flex-col xl:ml-2">
           <ForecastCard
             temp={Math.floor(data.list[1].main.temp)}
             date={data.list[1].dt_txt}
