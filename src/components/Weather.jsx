@@ -10,7 +10,7 @@ export default function Weather({ data }) {
 
   return (
     <div className="flex rounded-md lg:w-3/4 text-[#00183a] animate__animated animate__fadeIn sms:flex-col sms:items-center sms:w-full md:flex-col md:items-center xl:w-2/4 xl:flex xl:justify-between xl:flex-row xl:py-20 xxl:w-3/4 xxl:justify-evenly">
-      <div className="sms:w-full text-center xl:w-1/4 xxl:text-start">
+      <div className="sms:w-full text-center xl:w-1/4 xxl:text-center bg-opacity-20 rounded-md">
         <h1 className="mt-3 lg:text-2xl font-sans font-semibold xxl:text-4xl">
           {data.city.name}, {data.city.country}
         </h1>

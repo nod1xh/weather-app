@@ -56,7 +56,7 @@ function App() {
       {error && <ShowError errorInfo={error} />}
       {weatherData && <Weather data={weatherData} />}
       {weatherData && (
-        <div className="flex flex-row w-full sms:flex-col">
+        <div className="flex flex-row w-full sms:flex-col xxl:w-3/4">
           <Forecast data={weatherData} />
         </div>
       )}
