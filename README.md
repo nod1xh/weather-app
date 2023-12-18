@@ -1,6 +1,6 @@
 # Weather App
 
-Live site: https://wonderful-cocada-bdbddd.netlify.app/ [Site is not responsive yet]
+Live site: https://wonderful-cocada-bdbddd.netlify.app/
 
 Technologies used:
 - React
